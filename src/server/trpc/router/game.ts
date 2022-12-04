@@ -1,6 +1,7 @@
 import { z } from "zod";
 import cryptoRandomString from "crypto-random-string";
 import { router, publicProcedure, protectedProcedure } from "../trpc";
+import { Prisma } from "@prisma/client";
 
 // All endpoints for games from creation to completion
 export const gameRouter = router({
@@ -11,25 +12,46 @@ export const gameRouter = router({
       type: "url-safe",
     });
 
-    try {
-      await ctx.prisma.user.update({
-        where: {
-          id: ctx.session.user.id,
-        },
-        data: {
-          games: {
-            create: {
-              id: gameId,
-            },
+    // Create the game
+    const game = await ctx.prisma.game.create({
+      data: {
+        id: gameId,
+        user: {
+          connect: {
+            id: ctx.session.user.id,
           },
         },
-      });
-    } catch (error) {
-      console.log(error);
-      throw new Error("Failed to create game");
-    }
+        rounds: {
+          create: [
+            {
+              id: gameId + "-1",
+              round: 1,
+            },
+            {
+              id: gameId + "-2",
+              round: 2,
+            },
+            {
+              id: gameId + "-3",
+              round: 2,
+            },
+            {
+              id: gameId + "-4",
+              round: 2,
+            },
+            {
+              id: gameId + "-5",
+              round: 2,
+            },
+          ],
+        },
+      },
+      include: {
+        rounds: true,
+      },
+    });
 
-    return gameId;
+    return game;
   }),
   // Returns all a user's games
   getUserGames: protectedProcedure.query(async ({ ctx }) => {

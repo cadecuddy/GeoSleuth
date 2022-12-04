@@ -63,9 +63,25 @@ model VerificationToken {
 model Game {
   id        String   @id
   createdAt DateTime @default(now())
-  playerId  String
   user      User     @relation(fields: [playerId], references: [id])
+  playerId  String
+  rounds    Round[]
   complete  Boolean  @default(false)
   score     Int      @default(0)
   round     Int      @default(0)
+}
+
+model Round {
+  id             String   @id
+  game           Game     @relation(fields: [gameId], references: [id])
+  gameId         String
+  latitude       Float    @default(0)
+  longitude      Float    @default(0)
+  guessLatitude  Float    @default(0)
+  guessLongitude Float    @default(0)
+  accuracy       Float    @default(0)
+  score          Int      @default(0)
+  round          Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
