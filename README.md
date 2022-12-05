@@ -4,10 +4,13 @@ GeoGuessr-eqsue game where players have to guess where they are on google street
 Using as a way to learn prisma, trpc, RDBs, and reinforce my typescript skills.
 
 ### **TODO List**
-
+- Landing Page ⬛
+  - Unauthed Landing ✅
+  - User Home Page ⬛
 - Account Creation ⬛
   - API Key Generation ⬛
-  - Auth / Store in DB ✅
+  - Auth / Store in DB ⬛
+    - Change Auth to Google ⬛
   - Generate Sessions / Cookies ✅
 - Play Game ⬛
   - Generate Game ID ✅
