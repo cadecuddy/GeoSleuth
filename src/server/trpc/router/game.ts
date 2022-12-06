@@ -1,7 +1,5 @@
-import { z } from "zod";
 import cryptoRandomString from "crypto-random-string";
-import { router, publicProcedure, protectedProcedure } from "../trpc";
-import { Prisma } from "@prisma/client";
+import { router, protectedProcedure } from "../trpc";
 
 // All endpoints for games from creation to completion
 export const gameRouter = router({
@@ -33,15 +31,15 @@ export const gameRouter = router({
             },
             {
               id: gameId + "-3",
-              round: 2,
+              round: 3,
             },
             {
               id: gameId + "-4",
-              round: 2,
+              round: 4,
             },
             {
               id: gameId + "-5",
-              round: 2,
+              round: 5,
             },
           ],
         },
