@@ -1,17 +1,15 @@
 import React, { useState } from "react";
-import { FaMapSigns } from "react-icons/fa";
+import { FaMapSigns, FaSignInAlt, FaPlayCircle } from "react-icons/fa";
 import Footer from "./Footer";
-import Header from "./Header";
 
 export default function Welcome() {
   const [revealedLetters, setRevealedLetters] = useState<
     (string | undefined)[]
   >([undefined, undefined, undefined, undefined]);
 
+  // Changes the asterisks to letters when moused over
   const handleMouseEnter = (index: number) => {
-    // only update revealed letters if the current letter is not already revealed
     if (revealedLetters[index] === undefined) {
-      // update revealed letters at the specified index
       setRevealedLetters((prevRevealedLetters) => {
         const newRevealedLetters = [...prevRevealedLetters];
         newRevealedLetters[index] = "HECK"[index];
@@ -20,6 +18,7 @@ export default function Welcome() {
     }
   };
 
+  // Changes the letters back to asterisks when moused out
   const handleMouseLeave = (index: number) => {
     if (revealedLetters[index] !== undefined) {
       setRevealedLetters((prevRevealedLetters) => {
@@ -32,7 +31,6 @@ export default function Welcome() {
 
   return (
     <>
-      <Header />
       <div className="sm:mx-8 sm:min-w-fit md:mx-24 lg:mx-48 xl:mx-72">
         <div className="position-relative mt-16 justify-center text-center align-middle text-8xl tracking-wide">
           <div className="position-absolute" style={{ top: "-1em" }}>
@@ -62,11 +60,11 @@ export default function Welcome() {
         </div>
 
         <div className="mt-12 flex flex-row rounded-lg border-2 border-transparent bg-transparent p-12 transition duration-500 ease-out hover:shadow-xl hover:shadow-neutral-800 hover:md:scale-105">
-          <div className="w-1/2 -rotate-6">
-            <FaMapSigns className="m-auto h-32 w-32 transition duration-300 ease-out hover:rotate-12 hover:scale-105 hover:cursor-pointer hover:text-[#72cea6]" />
+          <div className="flex w-1/2 -rotate-6 ">
+            <FaMapSigns className="m-auto h-32 w-32 drop-shadow-xl transition duration-300 ease-out hover:rotate-12 hover:scale-105 hover:cursor-pointer hover:text-[#72cea6]" />
           </div>
           <div className="m-auto ml-10 w-1/2">
-            <h3 className="text-2xl font-bold tracking-wide text-[#72cea6]">
+            <h3 className="text-3xl font-bold tracking-wide text-[#72cea6]">
               FIVE ROUNDS
             </h3>
             <p className="text-lg">
@@ -77,17 +75,19 @@ export default function Welcome() {
         </div>
         <div className="mt-6 flex flex-row rounded-lg border-2 border-transparent bg-transparent p-12 transition duration-500 ease-out hover:shadow-xl hover:shadow-neutral-800 hover:md:scale-105">
           <div className="m-auto ml-10 w-1/2">
-            <h3 className="text-2xl font-bold tracking-wide text-[#72cea6]">
+            <h3 className="text-3xl font-bold tracking-wide text-[#72cea6]">
               EASY TO PLAY
             </h3>
             <p className="text-lg leading-relaxed">
               {"-->"} Sign in
-              <br /> {"-->"} Create Google maps API key
-              <br /> {"-->"} Start playing.
+              {/* <br /> {"-->"} Create Google maps API key */}
+              <br /> {"-->"} Start playing
             </p>
           </div>
-          <div className="w-1/2">
-            <svg className="w-64" />
+          <div className="m-auto flex w-1/2 space-x-12">
+            <FaSignInAlt className="h-24 w-24 text-sky-50 transition duration-300 ease-out hover:scale-105 hover:text-[#4fb3a2] hover:shadow-slate-800" />
+            {/* <FaKey className="h-24 w-24 text-sky-50 transition duration-300 ease-out hover:scale-105 hover:text-[#4fb3a2] hover:shadow-slate-800" /> */}
+            <FaPlayCircle className="h-24 w-24 text-sky-50 transition duration-300 ease-out hover:scale-105 hover:text-[#4fb3a2] hover:shadow-slate-800" />
           </div>
         </div>
       </div>
