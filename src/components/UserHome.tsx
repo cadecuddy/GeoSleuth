@@ -1,8 +1,6 @@
 import { Session } from "next-auth";
-import React, { ReactElement } from "react";
+import React from "react";
 import { trpc } from "../utils/trpc";
-import Footer from "./Footer";
-import Header from "./Header";
 
 type Props = {
   session: Session;
@@ -10,13 +8,13 @@ type Props = {
 
 export default function UserHome({ session }: Props) {
   const startGameMutation = trpc.game.startGame.useMutation();
+
   const generateGameId = async () => {
-    const game = await startGameMutation.mutateAsync();
+    startGameMutation.mutateAsync();
   };
 
   return (
     <>
-      <Header />
       <div className="flex flex-col items-center">
         <p>
           Hello{" "}
@@ -30,7 +28,7 @@ export default function UserHome({ session }: Props) {
             // generate game id if user is logged in and id exists
             onClick={() => generateGameId()}
           >
-            Generate Game Id
+            Generate Game
           </button>
         </div>
       </div>
