@@ -1,25 +1,10 @@
-import { signIn, signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { FaCompass } from "react-icons/fa";
+import AvatarMenu from "./AvatarMenu";
 
 const Header = () => {
-  const { data: session } = useSession();
-
-  // Debounced sign in button
-  const handleSignIn = async (e: any) => {
-    e.preventDefault();
-    try {
-      await signIn("discord");
-    } catch (error) {}
-  };
-
-  // Debounced sign out button
-  const handleSignOut = async (e: any) => {
-    e.preventDefault();
-    try {
-      await signOut();
-    } catch (error) {}
-  };
+  const { data: session, status } = useSession();
 
   return (
     <nav className="mt-6 flex flex-col items-center justify-between px-4 py-4 sm:mx-12 sm:min-w-fit sm:flex-row md:mx-36 lg:mx-48 xl:mx-72">
@@ -33,33 +18,14 @@ const Header = () => {
           </div>
         </Link>
       </div>
-      {session ? (
-        <div className="flex items-center space-x-4 text-lg font-bold tracking-wide">
-          <Link href="/about" passHref>
-            <div className="rounded-md bg-transparent px-3 py-2 transition-transform duration-300 ease-out hover:scale-105 hover:shadow-md hover:shadow-neutral-900">
-              ABOUT
-            </div>
-          </Link>
-          <Link href="/leaderboard" passHref>
-            <div className="rounded-md bg-transparent px-3 py-2 transition-transform duration-300 ease-out hover:scale-105 hover:shadow-md hover:shadow-neutral-900">
-              LEADERBOARD
-            </div>
-          </Link>
-          <div
-            className="rounded-md bg-transparent px-3 py-2 transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer hover:bg-red-900 hover:shadow-md hover:shadow-neutral-900"
-            onClick={handleSignOut}
-          >
-            SIGN OUT
-          </div>
-        </div>
-      ) : (
+      {session && session.user && <AvatarMenu />}
+      {!session && status !== "loading" && (
         <div className="flex items-center space-x-4 text-sm font-extrabold tracking-wide hover:cursor-pointer">
-          <div
-            className="rounded-md bg-[#447761] px-3 py-2 shadow-xl transition-transform duration-300 ease-out hover:scale-105 hover:shadow-md hover:shadow-neutral-900"
-            onClick={handleSignIn}
-          >
-            ALREADY HAVE AN ACCOUNT?
-          </div>
+          <Link href="/login">
+            <div className="rounded-md bg-[#447761] px-3 py-2 shadow-xl transition-transform duration-300 ease-out hover:scale-105 hover:shadow-md hover:shadow-neutral-900">
+              SIGN IN TO GET STARTED
+            </div>
+          </Link>
         </div>
       )}
     </nav>
