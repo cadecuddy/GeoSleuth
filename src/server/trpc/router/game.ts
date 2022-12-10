@@ -51,16 +51,4 @@ export const gameRouter = router({
 
     return game;
   }),
-  // Returns all a user's games
-  getUserGames: protectedProcedure.query(async ({ ctx }) => {
-    const games = await ctx.prisma.user
-      .findUnique({
-        where: {
-          id: ctx.session.user.id,
-        },
-      })
-      .games();
-
-    return games;
-  }),
 });
