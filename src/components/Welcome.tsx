@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaMapSigns, FaSignInAlt, FaPlayCircle } from "react-icons/fa";
+import { FaMap, FaSignInAlt, FaPlayCircle } from "react-icons/fa";
 import Footer from "./Footer";
 
 export default function Welcome() {
@@ -60,8 +60,13 @@ export default function Welcome() {
         </div>
 
         <div className="mt-12 flex flex-row rounded-lg border-2 border-transparent bg-transparent p-12 transition duration-500 ease-out hover:shadow-xl hover:shadow-neutral-800 hover:md:scale-105">
-          <div className="flex w-1/2 -rotate-6 ">
-            <FaMapSigns className="m-auto h-32 w-32 drop-shadow-xl transition duration-300 ease-out hover:rotate-12 hover:scale-105 hover:cursor-pointer hover:text-[#72cea6]" />
+          <div className="m-auto -rotate-6 content-center space-x-12">
+            <img
+              src="/geosleuth.png"
+              className="m-auto inline-block h-40 w-40 brightness-90 drop-shadow-xl transition duration-300 ease-out hover:rotate-12 
+              hover:scale-105 hover:cursor-pointer"
+            />
+            <FaMap className="hover: m-auto inline-block h-40 w-40 drop-shadow-xl transition duration-300 ease-out hover:rotate-12 hover:scale-105 hover:cursor-pointer hover:text-[#4fb3a2]" />
           </div>
           <div className="m-auto ml-10 w-1/2">
             <h3 className="text-3xl font-bold tracking-wide text-[#72cea6]">

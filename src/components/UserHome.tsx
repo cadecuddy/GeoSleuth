@@ -1,5 +1,5 @@
 import { Session } from "next-auth";
-import React from "react";
+import React, { ReactElement } from "react";
 import { trpc } from "../utils/trpc";
 
 type Props = {
@@ -35,3 +35,5 @@ export default function UserHome({ session }: Props) {
     </>
   );
 }
+
+UserHome.getLayout = (page: ReactElement) => page;

@@ -28,15 +28,22 @@ export default function AvatarMenu() {
             <Menu as="div" className="text-md relative inline-block text-left">
               <div>
                 <Menu.Button
-                  className="border-1 w-52 rounded-xl border-neutral-600 bg-[#447761] bg-transparent px-3 py-2 transition-colors duration-200 ease-in-out hover:cursor-pointer hover:bg-slate-700 hover:shadow-lg hover:ring-1 hover:ring-slate-800"
+                  className="border-1 w-52 rounded-xl border-neutral-600 bg-[#447761] px-3 py-2 shadow-xl transition-colors duration-200 ease-in-out hover:cursor-pointer hover:bg-slate-700 hover:shadow-lg hover:ring-1 hover:ring-slate-800"
                   onClick={handleClick}
                 >
                   {session.user?.image ? (
                     <img
-                      src={session.user.image}
+                      src={
+                        session.user.image
+                          ? session.user.image
+                          : "/geosleuth.png"
+                      }
+                      onError={(e) => {
+                        e.currentTarget.src = "/geosleuth.png";
+                      }}
                       width={32}
                       height={32}
-                      className="float-left mr-3 inline-block rounded-full drop-shadow-lg"
+                      className="float-left mr-3 inline-block rounded-full outline outline-2 drop-shadow-lg"
                     />
                   ) : (
                     <FaUserAlt className="mr-2 h-8 w-8" />
@@ -74,7 +81,7 @@ export default function AvatarMenu() {
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="bg-slate-70 absolute right-0 mt-1 w-full origin-top-right divide-y divide-x-0 rounded-l-md rounded-r-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <Menu.Items className="absolute right-0 mt-1 w-full origin-top-right divide-y divide-x-0 rounded-l-md rounded-r-md bg-slate-700 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="px-1 py-1 ">
                       <Menu.Item>
                         {({ active }) => (
