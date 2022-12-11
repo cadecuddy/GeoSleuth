@@ -1,20 +1,26 @@
-import { type AppType } from "next/app";
-import { type Session } from "next-auth";
+import { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
-
 import { trpc } from "../utils/trpc";
-
 import "../styles/globals.css";
+import { NextPage } from "next";
+import { ReactElement, ReactNode } from "react";
 
-const MyApp: AppType<{ session: Session | null }> = ({
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+function MyApp({
   Component,
   pageProps: { session, ...pageProps },
-}) => {
-  return (
-    <SessionProvider session={session}>
-      <Component {...pageProps} />
-    </SessionProvider>
-  );
-};
+}: AppPropsWithLayout) {
+  const getLayout = Component.getLayout ?? ((page) => page);
+  const Layout = getLayout(<Component {...pageProps} />);
+
+  return <SessionProvider session={session}>{Layout}</SessionProvider>;
+}
 
 export default trpc.withTRPC(MyApp);
