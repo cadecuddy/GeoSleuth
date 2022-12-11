@@ -5,3 +5,12 @@
 body {
   @apply bg-gradient-to-r from-slate-700 via-gray-700 to-neutral-700 font-mono text-neutral-200;
 }
+
+@keyframes fadeInOut {
+  from {
+    opacity: 0.2;
+  }
+  to {
+    opacity: 0.8;
+  }
+}

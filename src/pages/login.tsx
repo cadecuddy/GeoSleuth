@@ -1,9 +1,10 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { signIn } from "next-auth/react";
 import { FaDiscord, FaGoogle } from "react-icons/fa";
-import Header from "../components/Header";
 import { GetServerSideProps } from "next";
 import { getServerAuthSession } from "../server/common/get-server-auth-session";
+import HeaderLayout from "../layouts/HeaderLayout";
+import Footer from "../components/Footer";
 
 export default function login() {
   const handleSignIn = async (provider: string) => {
@@ -15,7 +16,6 @@ export default function login() {
 
   return (
     <>
-      <Header />
       <div className="mt-12 flex flex-col items-center justify-center py-2">
         <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
           <h1 className="text-6xl font-bold">
@@ -69,3 +69,23 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return { props: {} };
 };
+
+login.getLayout = (page: ReactElement) => (
+  <div>
+    <HeaderLayout>{page}</HeaderLayout>
+    <div
+      className="
+      fixed bottom-0
+      flex
+      w-full
+      items-center
+      justify-center
+      text-sm
+      font-bold
+      text-neutral-100
+      "
+    >
+      <Footer />
+    </div>
+  </div>
+);

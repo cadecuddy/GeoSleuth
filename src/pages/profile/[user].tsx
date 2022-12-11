@@ -1,35 +1,50 @@
-import { PrismaClient } from "@prisma/client";
-import { GetServerSideProps } from "next";
-import { User } from "next-auth";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { ReactElement } from "react";
+import Loading from "../../components/Loading";
+import HeaderLayout from "../../layouts/HeaderLayout";
+import { trpc } from "../../utils/trpc";
 
-// We can either check on the server side if the user exists
-// and return a 404 if not, or we can check on the client side
-// and have a skeleton loading state while we fetch the data.
+export default function UserProfile() {
+  const router = useRouter();
+  const { data, error, isLoading, isError } = trpc.stats.getUser.useQuery(
+    {
+      id: router.query.user as string,
+    },
+    {
+      enabled: router.isReady,
+      refetchOnWindowFocus: false,
+      retry: false,
+    }
+  );
 
-// Prob best to load in client side with skeleton.
-
-export default function UserProfile({ user }: { user: User }) {
-  if (!user) {
-    return <div>Not found</div>;
+  if (isLoading) {
+    return <Loading />;
+  }
+  if (isError) {
+    if (error?.data?.code === "UNAUTHORIZED") {
+      return (
+        <div className="text-center">
+          Please sign in to view other user's profiles.
+        </div>
+      );
+    }
+    return (
+      <div className="text-center text-4xl font-extrabold text-indigo-500">
+        Error: {error?.message}
+      </div>
+    );
   }
 
-  return <div>Hello {user.id}</div>;
+  return (
+    <>
+      <div className="text-center">
+        <h1 className="text-4xl font-bold">{data?.name}</h1>
+        <p className="text-2xl font-semibold">Games: {data?.games.length}</p>
+      </div>
+    </>
+  );
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const prisma = new PrismaClient();
-  // convert the query string to a string
-  const userId = context.query.user as string;
-  const user = await prisma.user.findUnique({
-    where: {
-      id: userId,
-    },
-  });
-
-  return {
-    props: {
-      user,
-    },
-  };
-};
+UserProfile.getLayout = (page: ReactElement) => (
+  <HeaderLayout>{page}</HeaderLayout>
+);
