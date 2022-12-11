@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import React, { ReactElement } from "react";
 
 export default function Custom404() {
   // 404 in the middle of the screen horizontally and vertically
@@ -21,3 +21,5 @@ export default function Custom404() {
     </div>
   );
 }
+
+Custom404.getLayout = (page: ReactElement) => page;
