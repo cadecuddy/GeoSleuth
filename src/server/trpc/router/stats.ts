@@ -17,11 +17,28 @@ export const statsRouter = router({
         select: {
           id: true,
           name: true,
-          email: true,
           games: true,
         },
       });
 
       return user;
     }),
+  getLeaderboard: protectedProcedure.query(async ({ ctx }) => {
+    const leaderboard = await ctx.prisma.user.findMany({
+      take: 10,
+      select: {
+        id: true,
+        name: true,
+        games: true,
+        image: true,
+      },
+      orderBy: {
+        games: {
+          _count: "desc",
+        },
+      },
+    });
+
+    return leaderboard;
+  }),
 });

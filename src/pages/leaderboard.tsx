@@ -1,38 +1,64 @@
-import { GetServerSideProps } from "next";
-import { useSession } from "next-auth/react";
-import React from "react";
+import React, { ReactElement } from "react";
+import Footer from "../components/Footer";
+import LeaderboardCard from "../components/LeaderboardCard";
 import Loading from "../components/Loading";
-import { getServerAuthSession } from "../server/common/get-server-auth-session";
+import HeaderLayout from "../layouts/HeaderLayout";
+import { trpc } from "../utils/trpc";
 
 export default function leaderboard() {
-  const { data: session } = useSession();
+  const { data, error, isLoading, isError } =
+    trpc.stats.getLeaderboard.useQuery(undefined, {
+      refetchOnWindowFocus: false,
+      retry: false,
+    });
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (isError) {
+    if (error?.data?.code === "UNAUTHORIZED") {
+      return (
+        <div className="text-center">
+          Please sign in to view the leaderboard.
+        </div>
+      );
+    }
+    return (
+      <div className="text-center text-4xl font-extrabold text-indigo-500">
+        Error: {error?.message}
+      </div>
+    );
+  }
 
   return (
     <>
-      {!session && <Loading />}
-      {session && (
-        <div>
-          <h1>Leaderboard</h1>
-        </div>
-      )}
+      <h1 className="mb-8 text-center font-extrabold text-[#72cea6] sm:text-2xl md:text-3xl lg:text-4xl">
+        Leaderboard
+      </h1>
+      {data?.map((user, index) => (
+        <LeaderboardCard user={user} index={index} />
+      ))}
     </>
   );
 }
 
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//   const session = await getServerAuthSession({
-//     req: context.req,
-//     res: context.res,
-//   });
-
-//   if (!session) {
-//     return {
-//       redirect: {
-//         destination: "/",
-//         permanent: false,
-//       },
-//     };
-//   }
-
-//   return { props: {} };
-// };
+leaderboard.getLayout = (page: ReactElement) => (
+  <div>
+    <HeaderLayout>{page}</HeaderLayout>
+    <div
+      className="
+      fixed bottom-0
+      flex
+      w-full
+      items-center
+      justify-center
+      text-sm
+      font-bold
+      text-neutral-100
+      "
+    >
+      <Footer />
+    </div>
+  </div>
+);
