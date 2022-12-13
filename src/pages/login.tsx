@@ -1,12 +1,16 @@
 import React, { ReactElement } from "react";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { FaDiscord, FaGoogle } from "react-icons/fa";
-import { GetServerSideProps } from "next";
-import { getServerAuthSession } from "../server/common/get-server-auth-session";
 import HeaderLayout from "../layouts/HeaderLayout";
 import Footer from "../components/Footer";
+import Router from "next/router";
 
 export default function login() {
+  const { data: session } = useSession();
+  if (session) {
+    Router.push("/");
+  }
+
   const handleSignIn = async (provider: string) => {
     try {
       await signIn(provider);
@@ -50,25 +54,6 @@ export default function login() {
     </>
   );
 }
-
-// Server-side session check and redirect if user is already logged in
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getServerAuthSession({
-    req: context.req,
-    res: context.res,
-  });
-
-  if (session) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
-
-  return { props: {} };
-};
 
 login.getLayout = (page: ReactElement) => (
   <div>
