@@ -1,5 +1,4 @@
 import React, { ReactElement } from "react";
-import Footer from "../components/Footer";
 import LeaderboardCard from "../components/LeaderboardCard";
 import Loading from "../components/Loading";
 import HeaderLayout from "../layouts/HeaderLayout";
@@ -46,19 +45,5 @@ export default function leaderboard() {
 leaderboard.getLayout = (page: ReactElement) => (
   <div>
     <HeaderLayout>{page}</HeaderLayout>
-    <div
-      className="
-      fixed bottom-0
-      flex
-      w-full
-      items-center
-      justify-center
-      text-sm
-      font-bold
-      text-neutral-100
-      "
-    >
-      <Footer />
-    </div>
   </div>
 );

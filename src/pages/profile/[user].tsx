@@ -29,7 +29,7 @@ export default function UserProfile() {
       );
     }
     return (
-      <div className="text-center text-4xl font-extrabold text-indigo-500">
+      <div className="text-center text-2xl font-extrabold text-indigo-500">
         Error: {error?.message}
       </div>
     );
@@ -37,6 +37,7 @@ export default function UserProfile() {
 
   return (
     <>
+      {data.games}
       <div className="text-center">
         <h1 className="text-4xl font-bold">{data?.name}</h1>
         <p className="text-2xl font-semibold">Games: {data?.games.length}</p>

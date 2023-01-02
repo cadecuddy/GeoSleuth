@@ -2,7 +2,6 @@ import React, { ReactElement } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { FaDiscord, FaGoogle } from "react-icons/fa";
 import HeaderLayout from "../layouts/HeaderLayout";
-import Footer from "../components/Footer";
 import Router from "next/router";
 import Loading from "../components/Loading";
 
@@ -40,7 +39,7 @@ export default function login() {
             <div className="mt-6 flex max-w-4xl flex-wrap items-center justify-around sm:w-full">
               <button
                 onClick={() => handleSignIn("discord")}
-                className="borderborder-transparent mt-6 w-96 rounded-xl bg-transparent p-6 text-left shadow-2xl shadow-slate-800 transition-transform duration-300 ease-out hover:cursor-pointer hover:bg-[#7289da] hover:text-white hover:shadow-neutral-800 focus:outline-none hover:md:scale-105"
+                className="mt-6 w-96 rounded-xl border border-transparent bg-transparent p-6 text-left shadow-2xl shadow-slate-800 transition-transform duration-300 ease-out hover:cursor-pointer hover:bg-[#7289da] hover:text-white hover:shadow-neutral-800 focus:outline-none hover:md:scale-105"
               >
                 <FaDiscord className="mr-4 inline-block h-8 w-8" />
                 <span className="text-2xl font-bold">Sign in with Discord</span>
@@ -49,7 +48,7 @@ export default function login() {
             <div className="mt-6 flex max-w-4xl flex-wrap items-center justify-around sm:w-full">
               <button
                 onClick={() => handleSignIn("google")}
-                className="borderborder-transparent mt-6 w-96 rounded-xl bg-transparent p-6 text-left shadow-2xl shadow-slate-800 transition-transform duration-300 ease-out hover:cursor-pointer hover:bg-[#ea4335] hover:text-white hover:shadow-neutral-800 focus:outline-none hover:md:scale-105"
+                className="mt-6 w-96 rounded-xl border border-transparent bg-transparent p-6 text-left shadow-2xl shadow-slate-800 transition-transform duration-300 ease-out hover:cursor-pointer hover:bg-[#ea4335] hover:text-white hover:shadow-neutral-800 focus:outline-none hover:md:scale-105"
               >
                 <FaGoogle className="mr-4 inline-block h-8 w-8" />
                 <span className="text-2xl font-bold">Sign in with Google</span>
